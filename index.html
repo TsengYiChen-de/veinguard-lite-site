@@ -62,7 +62,7 @@
     const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     const dateStr = now.toLocaleDateString('en-US', dateOptions);
     document.getElementById('date').innerText = "日期：" + dateStr;
-    document.getElementById('duration').innerText = "時間：" + timeStr + "（起飛至落地）";
+    document.getElementById('duration').innerText = "時間：" + timeStr + "（目前時間為UTC+8）";
 
     // 隨機選擇 DVT 風險與提醒
     const risks = [
