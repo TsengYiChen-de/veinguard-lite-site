@@ -35,6 +35,7 @@
         .yellow { color: orange; font-weight: bold; }
         .orange { color: darkorange; font-weight: bold; }
         .red { color: red; font-weight: bold; }
+        .blue { color: blue; }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -63,9 +64,9 @@
             const risk = risks[Math.floor(Math.random() * risks.length)];
 
             // 顯示到畫面
-            document.getElementById("name").textContent = name;
-            document.getElementById("seat").textContent = seat;
-            document.getElementById("position").textContent = position;
+            document.getElementById("name").innerHTML = "<strong>" + name + "</strong>";
+            document.getElementById("seat").innerHTML = "<span class='blue'>" + seat + "</span>";
+            document.getElementById("position").innerHTML = "<strong>" + position + "</strong>";
             document.getElementById("risk").textContent = risk.level;
             document.getElementById("risk").classList.add(risk.color);
             document.getElementById("reminder").textContent = risk.reminder;
