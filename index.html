@@ -1,79 +1,93 @@
 
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>登機證 - VeinGuard Lite</title>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f4f4f4;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .boarding-pass {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      padding: 30px;
-      width: 90%;
-      max-width: 400px;
-    }
-    .airline {
-      font-size: 24px;
-      font-weight: bold;
-      color: #333;
-      margin-bottom: 10px;
-    }
-    .name, .seat, .date, .route, .duration, .location, .risk, .reminder {
-      margin: 10px 0;
-      font-size: 16px;
-    }
-    .risk span, .reminder span {
-      font-weight: bold;
-    }
-    .green { color: green; }
-    .yellow { color: goldenrod; }
-    .orange { color: darkorange; }
-    .red { color: red; }
-  </style>
+    <meta charset="UTF-8">
+    <title>VeinGuard Lite Boarding Pass</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 400px;
+            margin: auto;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .info {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+        .highlight {
+            font-weight: bold;
+        }
+        .green { color: green; font-weight: bold; }
+        .yellow { color: orange; font-weight: bold; }
+        .orange { color: darkorange; font-weight: bold; }
+        .red { color: red; font-weight: bold; }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // 隨機資料
+            const names = ["Ethan", "Olivia", "Liam", "Sophia", "Noah", "Ava", "James", "Isabella", "Lucas", "Mia"];
+            const seatRows = Array.from({length: 33}, (_, i) => i + 2); // 2–34
+            const seatLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
+            const positions = ["小腿", "手臂"];
+            const risks = [
+                { level: "健康", color: "green", reminder: "多喝水有益身體健康喔！" },
+                { level: "輕微", color: "yellow", reminder: "起來活動活動嘍～" },
+                { level: "中度", color: "orange", reminder: "按摩按摩小腿！不要再睡了！" },
+                { level: "高度", color: "red", reminder: "身體可能不適，請盡速通知空服員" }
+            ];
+
+            // 時間與日期
+            const now = new Date();
+            const options = { year: "numeric", month: "short", day: "2-digit" };
+            const today = now.toLocaleDateString("en-US", options).replace(",", "");
+            const time = now.toTimeString().split(" ")[0].substring(0, 5);
+
+            // 隨機選擇
+            const name = names[Math.floor(Math.random() * names.length)];
+            const seat = seatRows[Math.floor(Math.random() * seatRows.length)] + seatLetters[Math.floor(Math.random() * seatLetters.length)];
+            const position = positions[Math.floor(Math.random() * positions.length)];
+            const risk = risks[Math.floor(Math.random() * risks.length)];
+
+            // 顯示到畫面
+            document.getElementById("name").textContent = name;
+            document.getElementById("seat").textContent = seat;
+            document.getElementById("position").textContent = position;
+            document.getElementById("risk").textContent = risk.level;
+            document.getElementById("risk").classList.add(risk.color);
+            document.getElementById("reminder").textContent = risk.reminder;
+            document.getElementById("reminder").classList.add(risk.color);
+            document.getElementById("date").textContent = today;
+            document.getElementById("time").textContent = time;
+        });
+    </script>
 </head>
 <body>
-  <div class="boarding-pass">
-    <div class="airline">BootCamp Airline</div>
-    <div class="name">姓名：VeinGuard Lite</div>
-    <div class="seat">座位編號：23A</div>
-    <div class="date" id="date">日期：</div>
-    <div class="duration" id="duration">時間：</div>
-    <div class="route">航線：台北 → 舊金山</div>
-    <div class="location">黏貼部位：小腿</div>
-    <div class="risk" id="risk">DVT風險：</div>
-    <div class="reminder" id="reminder"><span></span></div>
-  </div>
-
-  <script>
-    // 產生現在時間與日期
-    const now = new Date();
-    const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
-    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    const dateStr = now.toLocaleDateString('en-US', dateOptions);
-    document.getElementById('date').innerText = "日期：" + dateStr;
-    document.getElementById('duration').innerText = "時間：" + timeStr + "（目前時間為UTC+8）";
-
-    // 隨機選擇 DVT 風險與提醒
-    const risks = [
-      { level: "健康", color: "green", reminder: "多喝水有益身體健康喔！" },
-      { level: "輕微", color: "yellow", reminder: "起來活動活動嘍～" },
-      { level: "中度", color: "orange", reminder: "按摩按摩小腿！不要再睡了！" },
-      { level: "高度", color: "red", reminder: "身體可能不適，請盡速通知空服員" }
-    ];
-    const chosen = risks[Math.floor(Math.random() * risks.length)];
-    document.getElementById('risk').innerHTML = `DVT風險：<span class="${chosen.color}">${chosen.level}</span>`;
-    document.getElementById('reminder').innerHTML = `提醒：<span class="${chosen.color}">${chosen.reminder}</span>`;
-  </script>
+    <div class="card">
+        <div class="title">VeinGuard Lite 登機證</div>
+        <div class="info"><span class="highlight">姓名：</span><span id="name"></span></div>
+        <div class="info"><span class="highlight">座位：</span><span id="seat"></span></div>
+        <div class="info"><span class="highlight">日期：</span><span id="date"></span></div>
+        <div class="info"><span class="highlight">時間：</span><span id="time"></span></div>
+        <div class="info"><span class="highlight">航程：</span>台北 → 舊金山</div>
+        <div class="info"><span class="highlight">航空公司：</span>BootCamp Airline</div>
+        <hr>
+        <div class="info"><span class="highlight">黏貼部位：</span><span id="position"></span></div>
+        <div class="info"><span class="highlight">DVT風險：</span><span id="risk"></span></div>
+        <div class="info"><span class="highlight">提醒：</span><span id="reminder"></span></div>
+    </div>
 </body>
 </html>
